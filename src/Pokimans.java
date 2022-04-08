@@ -90,7 +90,7 @@ public class Pokimans {
 				}
 				fr.setVisible(true);
 				fr.setChosen(0);
-				frame.setVisible(false);
+				frame.dispose();
 			}
 		});
 		btnNewButton.setBounds(10, 62, 111, 124);
@@ -117,7 +117,7 @@ public class Pokimans {
 				}
 				fr.setVisible(true);
 				fr.setChosen(1);
-				frame.setVisible(false);
+				frame.dispose();
 			}
 		});
 		try {
@@ -139,7 +139,7 @@ public class Pokimans {
 						if (idEnemy != idMyPkmn)
 							break;
 					}
-				else  
+				else   
 					idEnemy = randy.nextInt(0, 3);
 				try {
 					fr = new PokimanBattle(new Pokemon(2, btnNewButton_2.getText()),
@@ -150,7 +150,7 @@ public class Pokimans {
 				}
 				fr.setVisible(true);
 				fr.setChosen(2);
-				frame.setVisible(false);
+				frame.dispose();
 			}
 		});
 		try {

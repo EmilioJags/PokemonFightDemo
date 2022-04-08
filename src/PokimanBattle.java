@@ -87,8 +87,7 @@ public class PokimanBattle extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					battleLogLabel.setText("");
-					attackUsing(0, myPokemon, enemyPokemon);
-					Thread.sleep(500);
+					attackUsing(0, myPokemon, enemyPokemon); 
 					if(!gameOver)
 						attackUsing(randy.nextInt(0,4), enemyPokemon, myPokemon);
 				} catch (InterruptedException e1) {
@@ -105,8 +104,7 @@ public class PokimanBattle extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					battleLogLabel.setText("");
-					attackUsing(1, myPokemon, enemyPokemon);
-					Thread.sleep(500);
+					attackUsing(1, myPokemon, enemyPokemon); 
 					if(!gameOver)
 						attackUsing(randy.nextInt(0,4), enemyPokemon, myPokemon);
 				} catch (InterruptedException e1) {
@@ -124,8 +122,7 @@ public class PokimanBattle extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					battleLogLabel.setText("");
-					attackUsing(2, myPokemon, enemyPokemon);
-					Thread.sleep(500);
+					attackUsing(2, myPokemon, enemyPokemon); 
 					if(!gameOver)
 						attackUsing(randy.nextInt(0,4), enemyPokemon, myPokemon);
 				} catch (InterruptedException e1) {
@@ -143,8 +140,7 @@ public class PokimanBattle extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					battleLogLabel.setText("");
-					attackUsing(3, myPokemon, enemyPokemon);
-					Thread.sleep(500);
+					attackUsing(3, myPokemon, enemyPokemon); 
 					if(!gameOver)
 						attackUsing(randy.nextInt(0,4), enemyPokemon, myPokemon);
 				} catch (InterruptedException e1) {
@@ -193,15 +189,16 @@ public class PokimanBattle extends JFrame {
 	}
 
 	public void attackUsing(int moveId, Pokemon attacker, Pokemon defender) throws InterruptedException {
-		battleLogLabel.setText(battleLogLabel.getText() + "\n" + attacker.getName() + " uses " + attacker.getMoveSet().getMoveMap().get(moveId).getName() + ".");
-		Thread.sleep(750);
+		battleLogLabel.setText(battleLogLabel.getText() + "\n" + attacker.getName() + " uses " + attacker.getMoveSet().getMoveMap().get(moveId).getName() + "."); 
 		int attackerMaxDamage = attacker.getAttack(); //* attacker.getMoveSet().getMoveMap().get(moveId).getDamage();
 		if(attackerMaxDamage > 15) 
 			attackerMaxDamage = randy.nextInt(8,13);
 		int defenderMaxDefense = defender.getDefense() + 1 + randy.nextInt(1, 6);
-		int attackValue = Math.abs(attackerMaxDamage - defenderMaxDefense);
-		if (attackValue <= 0)
-			attackValue = randy.nextInt(1, 3); 
+		int attackValue = 0;
+		if(attacker.getMoveSet().getMoveMap().get(moveId).getDamage() == 0)
+			attackerMaxDamage = 0;
+		else
+			attackValue = Math.abs(attackerMaxDamage - defenderMaxDefense);
 		battleLogLabel.setText( 
 				battleLogLabel.getText() + "\n" + defender.getName() + " loses " + attackValue + " hitpoints.");
 		defender.setCurrentHp(defender.getCurrentHp() - attackValue);
@@ -229,7 +226,7 @@ public class PokimanBattle extends JFrame {
 			enemyHpLabel.setText("HP: " + 0);
 			enemyHpBar.setValue(0);  
 	        battleLogLabel.setText(battleLogLabel.getText() + "\n" + myPokemon.getName() + " WINS!"); 
-	        gameOver = true;
+	        gameOver = true; 
 	        disableButtons();
 		}
 	}
