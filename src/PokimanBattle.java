@@ -19,13 +19,14 @@ public class PokimanBattle extends JFrame {
 	private int chosenPokemon = 0;
 	private Pokemon myPokemon;
 	private Pokemon enemyPokemon;
-	public Random randy = new Random();
-	public JLabel myHpLabel;
-	public JLabel enemyHpLabel;
-	public JProgressBar myHpBar, enemyHpBar;
-	public JTextArea battleLogLabel;
-	public boolean gameOver = false;
-	public JButton moveOne, moveTwo, moveThree, moveFour;
+	private Random randy = new Random();
+	private JLabel myHpLabel;
+	private JLabel enemyHpLabel;
+	private JProgressBar myHpBar, enemyHpBar;
+	private JTextArea battleLogLabel;
+	private boolean gameOver = false;
+	private JButton moveOne, moveTwo, moveThree, moveFour;
+	private JButton mypoke_button, enemypoke_button;
 	/**
 	 * Launch the application.
 	 */
@@ -60,7 +61,7 @@ public class PokimanBattle extends JFrame {
 		btnNewButton_1.setBounds(481, 316, 108, 40);
 		contentPane.add(btnNewButton_1);
 
-		JButton mypoke_button = new JButton("New button");
+		  mypoke_button = new JButton("New button");
 		try {
 
 			Image img = ImageIO.read(getClass().getResource("resources/squirt120.png"));
@@ -71,7 +72,7 @@ public class PokimanBattle extends JFrame {
 		mypoke_button.setBounds(10, 72, 118, 124);
 		contentPane.add(mypoke_button);
 
-		JButton enemypoke_button = new JButton("New button");
+		  enemypoke_button = new JButton("New button");
 		try {
 
 			enemypoke_button.setIcon(new ImageIcon(this.enemyPokemon.getImg()));
@@ -189,16 +190,12 @@ public class PokimanBattle extends JFrame {
 	}
 
 	public void attackUsing(int moveId, Pokemon attacker, Pokemon defender) throws InterruptedException {
-		battleLogLabel.setText(battleLogLabel.getText() + "\n" + attacker.getName() + " uses " + attacker.getMoveSet().getMoveMap().get(moveId).getName() + "."); 
-		int attackerMaxDamage = attacker.getAttack(); //* attacker.getMoveSet().getMoveMap().get(moveId).getDamage();
-		if(attackerMaxDamage > 15) 
-			attackerMaxDamage = randy.nextInt(8,13);
-		int defenderMaxDefense = defender.getDefense() + 1 + randy.nextInt(1, 6);
-		int attackValue = 0;
+		battleLogLabel.setText(battleLogLabel.getText() + "\n" + attacker.getName() + " uses " + attacker.getMoveSet().getMoveMap().get(moveId).getName() + ".");
+		int attackValue;
 		if(attacker.getMoveSet().getMoveMap().get(moveId).getDamage() == 0)
-			attackerMaxDamage = 0;
+			attackValue = 0;
 		else
-			attackValue = Math.abs(attackerMaxDamage - defenderMaxDefense);
+			attackValue = randy.nextInt(1,attacker.getAttack());
 		battleLogLabel.setText( 
 				battleLogLabel.getText() + "\n" + defender.getName() + " loses " + attackValue + " hitpoints.");
 		defender.setCurrentHp(defender.getCurrentHp() - attackValue);
@@ -218,13 +215,15 @@ public class PokimanBattle extends JFrame {
 		if(myPokemon.getCurrentHp() <= 0) { 
 			myHpLabel.setText("HP: " + 0);
 			myHpBar.setValue(0);  
+			mypoke_button.setIcon(new ImageIcon(myPokemon.getDeadImg()));
 	        battleLogLabel.setText(battleLogLabel.getText() + "\n" + enemyPokemon.getName() + " WINS!");
 	        gameOver = true;
 	        disableButtons();
 		}
-		else if(enemyPokemon.getCurrentHp() <= 0) {
+		if(enemyPokemon.getCurrentHp() <= 0) {  
 			enemyHpLabel.setText("HP: " + 0);
 			enemyHpBar.setValue(0);  
+			enemypoke_button.setIcon(new ImageIcon(enemyPokemon.getDeadImg()));
 	        battleLogLabel.setText(battleLogLabel.getText() + "\n" + myPokemon.getName() + " WINS!"); 
 	        gameOver = true; 
 	        disableButtons();
